@@ -432,6 +432,7 @@ public final class Store<State, Action> {
     _ action: Action,
     originatingFrom originatingAction: Action?
   ) -> Task<Void, Never>? {
+      print(self)
     self.threadCheck(status: .send(action, originatingAction: originatingAction))
 
     self.bufferedActions.append(action)
@@ -461,7 +462,8 @@ public final class Store<State, Action> {
       let action = self.bufferedActions[index]
       let effect = self.reducer.reduce(into: &currentState, action: action)
       onAction?(action)
-      
+      print(self)
+    
       switch effect.operation {
       case .none:
         break
